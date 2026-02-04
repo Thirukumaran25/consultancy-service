@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="flex-1 flex flex-col h-96 overflow-y-auto" id="chatbox"></div>
+
+<input type="text" id="msg" placeholder="Ask your question..." class="border px-3 py-2 w-full">
+<button onclick="sendMessage()">Send</button>
+<a href="{% url 'conversation_history' %}" class="text-blue-600">View Conversation History</a>
+
+<script>
+function sendMessage(){
+  let msg = document.getElementById("msg").value.trim();
+  if(!msg) return;
+  let chatbox = document.getElementById("chatbox");
+  chatbox.innerHTML += `<p class="text-blue-600"><b>You:</b> ${msg}</p>`;
+
+  fetch("/chatbot/", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({message: msg})
+  })
+  .then(res => res.json())
+  .then(data => {
+    chatbox.innerHTML += `<p class="text-green-600"><b>Bot:</b> ${data.reply.replace(/\n/g,'<br>')}</p>`;
+    chatbox.scrollTop = chatbox.scrollHeight;
+  });
+
+  document.getElementById("msg").value="";
+}
+</script>
+{% endblock %}
