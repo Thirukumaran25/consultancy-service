@@ -7,8 +7,7 @@ from .views import (home,signup,job_list,search,job_detail,save_job,apply_job,
                     schedule_interview,admin_queries,escalate_query,admin_jobs,
                     add_job,edit_job,delete_job,admin_analytics,notifications,mark_notification_read,
                     admin_application_detail,admin_applications_by_status,
-                    chat_api,chatfaq,conversation_history,
-                    add_question,edit_question,delete_question,)
+                   )
 
 urlpatterns = [
     path('', home, name='home'),
@@ -35,12 +34,7 @@ urlpatterns = [
     path('admin/job/<int:job_id>/applications/', admin_job_applications, name='admin_job_applications'),
     path('application/<int:application_id>/',application_tracker,name='application_tracker'),
     
-    path("chatfaq/", chatfaq, name="chatfaq"),
-    path('chat-api/', chat_api, name='chat_api'),
-    path("add_question/", add_question, name="add_question"),
-    path("edit/<int:qid>/", edit_question, name="edit_question"),
-    path("delete/<int:qid>/", delete_question, name="delete_question"),
-    path("history/", conversation_history, name="conversation_history"),
+   
 
 
     path('dashboard/', admin_dashboard, name='admin_dashboard'),
